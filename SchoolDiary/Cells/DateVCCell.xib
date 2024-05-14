@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Bold.ttf">
+            <string>Montserrat-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DateVCCell" customModule="SchoolDiary" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="60" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="60" height="120"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMI-2M-WtB" userLabel="LinearView">
+                        <rect key="frame" x="0.0" y="0.0" width="60" height="120"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4i4-fm-C5D">
+                        <rect key="frame" x="22.5" y="5" width="15" height="46"/>
+                        <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="37"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="19" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pcq-3e-ZPh">
+                        <rect key="frame" x="2.5" y="76.5" width="55" height="28.5"/>
+                        <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="23"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Pcq-3e-ZPh" firstAttribute="height" secondItem="ZTg-uK-7eu" secondAttribute="height" multiplier="0.375" id="0Fu-AB-98x"/>
+                <constraint firstItem="4i4-fm-C5D" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.383333" id="Pt7-qj-Mc8"/>
+                <constraint firstItem="Pcq-3e-ZPh" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="V9c-KO-sSJ"/>
+                <constraint firstAttribute="bottom" secondItem="Pcq-3e-ZPh" secondAttribute="bottom" constant="15" id="b5h-gs-ILP"/>
+                <constraint firstAttribute="bottom" secondItem="AMI-2M-WtB" secondAttribute="bottom" id="cjn-Sx-lPi"/>
+                <constraint firstItem="AMI-2M-WtB" firstAttribute="width" secondItem="ZTg-uK-7eu" secondAttribute="width" id="f9x-So-iwA"/>
+                <constraint firstItem="4i4-fm-C5D" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="fKB-k9-2Qd"/>
+                <constraint firstItem="AMI-2M-WtB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="fWj-yF-44n"/>
+                <constraint firstItem="Pcq-3e-ZPh" firstAttribute="width" secondItem="ZTg-uK-7eu" secondAttribute="width" multiplier="0.916667" id="gN9-Gv-tlB"/>
+                <constraint firstItem="4i4-fm-C5D" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="inN-lK-uof"/>
+                <constraint firstItem="AMI-2M-WtB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="olt-qs-vKq"/>
+            </constraints>
+            <connections>
+                <outlet property="dayLabel" destination="4i4-fm-C5D" id="pyO-Gd-E0e"/>
+                <outlet property="linearView" destination="AMI-2M-WtB" id="Alu-xd-8GO"/>
+                <outlet property="weekDayLabel" destination="Pcq-3e-ZPh" id="59r-Ao-qBI"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="83"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Bold.ttf">
+            <string>Montserrat-Bold</string>
+        </array>
+        <array key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="LessonCVCell" id="gTV-IL-0wX" customClass="LessonCVCell" customModule="SchoolDiary" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="350" height="100"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Час" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAd-KR-NIT">
+                        <rect key="frame" x="20" y="42" width="25" height="16"/>
+                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
+                        <color key="textColor" red="0.36470588235294116" green="0.37647058823529411" blue="0.396078431372549" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nYg-7V-vRm">
+                        <rect key="frame" x="77" y="21" width="258" height="58"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="diA-wK-0wb" userLabel="LinearView2">
+                                <rect key="frame" x="0.0" y="0.0" width="258" height="58"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="назва предмету" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="whJ-8X-5bG">
+                                <rect key="frame" x="20" y="21" width="113" height="16"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="13"/>
+                                <color key="textColor" red="0.42352941176470588" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="whJ-8X-5bG" firstAttribute="leading" secondItem="nYg-7V-vRm" secondAttribute="leading" constant="20" id="5bW-R6-JTa"/>
+                            <constraint firstAttribute="trailing" secondItem="diA-wK-0wb" secondAttribute="trailing" id="6YS-sT-HQ4"/>
+                            <constraint firstItem="whJ-8X-5bG" firstAttribute="top" secondItem="nYg-7V-vRm" secondAttribute="top" constant="21" id="Hrg-Rq-4Zr"/>
+                            <constraint firstAttribute="bottom" secondItem="diA-wK-0wb" secondAttribute="bottom" id="YZZ-Kk-Aq5"/>
+                            <constraint firstItem="diA-wK-0wb" firstAttribute="leading" secondItem="nYg-7V-vRm" secondAttribute="leading" id="ayW-zL-YrK"/>
+                            <constraint firstItem="diA-wK-0wb" firstAttribute="top" secondItem="nYg-7V-vRm" secondAttribute="top" id="gFo-3b-nRQ"/>
+                        </constraints>
+                    </view>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line 2" id="XUh-9g-xkn">
+                        <rect key="frame" x="20" y="86" width="318" height="8"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shY-La-ww6">
+                        <rect key="frame" x="306" y="38" width="24" height="24"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="edit"/>
+                        <connections>
+                            <action selector="editBTN:" destination="gTV-IL-0wX" eventType="touchUpInside" id="aPz-af-1qf"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HHA-dY-GQh" userLabel="DeleteBTN">
+                        <rect key="frame" x="15" y="30" width="40" height="40"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain">
+                            <backgroundConfiguration key="background" image="Delete"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="deleteBTN:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Nt0-MJ-FFa"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="shY-La-ww6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="38" id="0HG-G1-LEy"/>
+                <constraint firstItem="nYg-7V-vRm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="21" id="A8S-mf-vck"/>
+                <constraint firstItem="pAd-KR-NIT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="42" id="Ce8-KI-FJ4"/>
+                <constraint firstItem="nYg-7V-vRm" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="0.737143" id="Cex-pn-taY"/>
+                <constraint firstItem="shY-La-ww6" firstAttribute="width" secondItem="diA-wK-0wb" secondAttribute="width" multiplier="0.0930233" id="FOc-gQ-o3S"/>
+                <constraint firstItem="HHA-dY-GQh" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="0.114286" id="Ggr-w3-cmG"/>
+                <constraint firstItem="nYg-7V-vRm" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.58" id="Jgv-kF-DMp"/>
+                <constraint firstItem="shY-La-ww6" firstAttribute="height" secondItem="diA-wK-0wb" secondAttribute="height" multiplier="0.413793" id="TSs-lo-sMz"/>
+                <constraint firstAttribute="trailing" secondItem="shY-La-ww6" secondAttribute="trailing" constant="20" id="b5Y-cO-ocY"/>
+                <constraint firstItem="pAd-KR-NIT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="cF3-VW-ZKc"/>
+                <constraint firstItem="HHA-dY-GQh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="30" id="cX4-8a-1MD"/>
+                <constraint firstAttribute="trailing" secondItem="nYg-7V-vRm" secondAttribute="trailing" constant="15" id="cij-2b-wtC"/>
+                <constraint firstItem="HHA-dY-GQh" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.4" id="so3-bP-kbI"/>
+                <constraint firstItem="HHA-dY-GQh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="zTu-p0-GcS"/>
+            </constraints>
+            <size key="customSize" width="350" height="100"/>
+            <connections>
+                <outlet property="deleteBTNOutlet" destination="HHA-dY-GQh" id="ab8-Zu-k16"/>
+                <outlet property="editButton" destination="shY-La-ww6" id="fw3-il-mdR"/>
+                <outlet property="linearView" destination="nYg-7V-vRm" id="BPX-rw-CDl"/>
+                <outlet property="linearView2" destination="diA-wK-0wb" id="Dgr-n1-2bf"/>
+                <outlet property="nameOfSubject" destination="whJ-8X-5bG" id="giE-4S-Yud"/>
+                <outlet property="timeLabel" destination="pAd-KR-NIT" id="RWx-c2-aI1"/>
+            </connections>
+            <point key="canvasLocation" x="173.91304347826087" y="77.008928571428569"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Delete" width="24" height="24"/>
+        <image name="Line 2" width="330" height="1"/>
+        <image name="edit" width="24" height="24"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

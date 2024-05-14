@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Bold.ttf">
+            <string>Montserrat-Bold</string>
+        </array>
+        <array key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
+        </array>
+        <array key="Montserrat-SemiBold.ttf">
+            <string>Montserrat-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MainLessonCVCell" customModule="SchoolDiary" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOd-G9-l1k">
+                        <rect key="frame" x="20" y="55" width="38" height="16"/>
+                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
+                        <color key="textColor" red="0.36470588240000001" green="0.37647058820000001" blue="0.39607843139999999" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3Y-0j-krF" userLabel="MainLessonView">
+                        <rect key="frame" x="74" y="21" width="320" height="88"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VgB-ZW-qkq" userLabel="LinearView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LessonsName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7u-xv-gpd">
+                                <rect key="frame" x="8" y="8" width="146" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="20"/>
+                                <color key="textColor" red="0.42352941179999998" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X3I-kq-iQ3" userLabel="showFullHomeworkButton">
+                                <rect key="frame" x="35" y="52" width="190" height="31"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="showFullHomeworkBTN:" destination="gTV-IL-0wX" eventType="touchUpInside" id="xLZ-4K-9QT"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homework" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lh2-T2-PLg">
+                                <rect key="frame" x="35" y="53" width="190" height="30"/>
+                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ebn-zi-mfQ">
+                                <rect key="frame" x="35" y="49" width="190" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="editHomeworkAction:" destination="gTV-IL-0wX" eventType="editingDidEnd" id="L7S-VO-pf1"/>
+                                </connections>
+                            </textField>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" adjustsFontForContentSizeCategory="YES" id="TzA-PU-sIZ" userLabel="fullHomeworkLabel">
+                                <rect key="frame" x="12" y="4" width="296" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KnI-8S-IVb" userLabel="recordBTN">
+                                <rect key="frame" x="285" y="53" width="30" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="microphone-2" title="">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="recordBTN:" destination="gTV-IL-0wX" eventType="touchUpInside" id="S3i-pO-6fK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rI2-n1-pMQ" userLabel="editBTN">
+                                <rect key="frame" x="5" y="53" width="30" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="edit">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="editBTN:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Z6x-vf-LlC"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2o-zZ-YTT" userLabel="playBTN">
+                                <rect key="frame" x="225" y="53" width="30" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="play-circle" title="">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="playBTN:" destination="gTV-IL-0wX" eventType="touchUpInside" id="iPb-pE-Nyh"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l34-PV-hRD" userLabel="deleteAudioBTN">
+                                <rect key="frame" x="255" y="53" width="30" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="trash" title="">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="deleteAudioBTN:" destination="gTV-IL-0wX" eventType="touchUpInside" id="stK-qx-np6"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="l34-PV-hRD" secondAttribute="bottom" constant="5" id="0xI-Zw-nRu"/>
+                            <constraint firstItem="KnI-8S-IVb" firstAttribute="leading" secondItem="l34-PV-hRD" secondAttribute="trailing" id="1c8-sz-dgV"/>
+                            <constraint firstAttribute="bottom" secondItem="rI2-n1-pMQ" secondAttribute="bottom" constant="5" id="2Is-OT-iMp"/>
+                            <constraint firstItem="rI2-n1-pMQ" firstAttribute="width" secondItem="W3Y-0j-krF" secondAttribute="width" multiplier="0.09375" id="3Xe-Uo-imQ"/>
+                            <constraint firstAttribute="bottom" secondItem="KnI-8S-IVb" secondAttribute="bottom" constant="5" id="3l1-Mp-fQH"/>
+                            <constraint firstAttribute="trailing" secondItem="VgB-ZW-qkq" secondAttribute="trailing" id="5hO-8g-99Y"/>
+                            <constraint firstItem="ebn-zi-mfQ" firstAttribute="leading" secondItem="rI2-n1-pMQ" secondAttribute="trailing" id="641-7m-Zdz"/>
+                            <constraint firstItem="a2o-zZ-YTT" firstAttribute="leading" secondItem="X3I-kq-iQ3" secondAttribute="trailing" id="6h9-Cj-g9D"/>
+                            <constraint firstItem="rI2-n1-pMQ" firstAttribute="height" secondItem="W3Y-0j-krF" secondAttribute="height" multiplier="0.340909" id="ASR-62-e1v"/>
+                            <constraint firstItem="rI2-n1-pMQ" firstAttribute="leading" secondItem="W3Y-0j-krF" secondAttribute="leading" constant="5" id="AgG-Fo-HWn"/>
+                            <constraint firstItem="a2o-zZ-YTT" firstAttribute="width" secondItem="W3Y-0j-krF" secondAttribute="width" multiplier="0.09375" id="FbU-6r-12i"/>
+                            <constraint firstItem="VgB-ZW-qkq" firstAttribute="top" secondItem="W3Y-0j-krF" secondAttribute="top" id="GPK-EG-PJP"/>
+                            <constraint firstAttribute="bottom" secondItem="VgB-ZW-qkq" secondAttribute="bottom" id="KS6-Qu-0kr"/>
+                            <constraint firstItem="l34-PV-hRD" firstAttribute="height" secondItem="W3Y-0j-krF" secondAttribute="height" multiplier="0.340909" id="Pfn-ke-C51"/>
+                            <constraint firstAttribute="bottom" secondItem="X3I-kq-iQ3" secondAttribute="bottom" constant="5" id="RiN-a6-oE0"/>
+                            <constraint firstAttribute="bottom" secondItem="ebn-zi-mfQ" secondAttribute="bottom" constant="5" id="SFA-LM-RIP"/>
+                            <constraint firstItem="VgB-ZW-qkq" firstAttribute="leading" secondItem="W3Y-0j-krF" secondAttribute="leading" id="TgI-z6-qPP"/>
+                            <constraint firstItem="KnI-8S-IVb" firstAttribute="height" secondItem="W3Y-0j-krF" secondAttribute="height" multiplier="0.340909" id="Ujh-z5-nan"/>
+                            <constraint firstItem="a2o-zZ-YTT" firstAttribute="leading" secondItem="ebn-zi-mfQ" secondAttribute="trailing" id="UsB-Tj-CkE"/>
+                            <constraint firstItem="KnI-8S-IVb" firstAttribute="width" secondItem="W3Y-0j-krF" secondAttribute="width" multiplier="0.09375" id="WIT-eQ-lcv"/>
+                            <constraint firstItem="l34-PV-hRD" firstAttribute="leading" secondItem="a2o-zZ-YTT" secondAttribute="trailing" id="aAe-ok-TaJ"/>
+                            <constraint firstItem="X3I-kq-iQ3" firstAttribute="leading" secondItem="rI2-n1-pMQ" secondAttribute="trailing" id="btw-ZY-aGr"/>
+                            <constraint firstItem="l34-PV-hRD" firstAttribute="width" secondItem="W3Y-0j-krF" secondAttribute="width" multiplier="0.09375" id="d2C-3W-y8O"/>
+                            <constraint firstItem="ebn-zi-mfQ" firstAttribute="height" secondItem="W3Y-0j-krF" secondAttribute="height" multiplier="0.386364" id="efp-32-NVH"/>
+                            <constraint firstItem="a2o-zZ-YTT" firstAttribute="leading" secondItem="lh2-T2-PLg" secondAttribute="trailing" id="frw-Ye-JeV"/>
+                            <constraint firstItem="lh2-T2-PLg" firstAttribute="leading" secondItem="rI2-n1-pMQ" secondAttribute="trailing" id="jHi-Kf-WQE"/>
+                            <constraint firstItem="a2o-zZ-YTT" firstAttribute="height" secondItem="W3Y-0j-krF" secondAttribute="height" multiplier="0.340909" id="mN1-UO-xr6"/>
+                            <constraint firstAttribute="trailing" secondItem="KnI-8S-IVb" secondAttribute="trailing" constant="5" id="pkT-0r-8Da"/>
+                            <constraint firstItem="lh2-T2-PLg" firstAttribute="height" secondItem="W3Y-0j-krF" secondAttribute="height" multiplier="0.340909" id="q3f-er-6FU"/>
+                            <constraint firstAttribute="bottom" secondItem="lh2-T2-PLg" secondAttribute="bottom" constant="5" id="sYQ-9t-UDW"/>
+                            <constraint firstAttribute="bottom" secondItem="a2o-zZ-YTT" secondAttribute="bottom" constant="5" id="sxV-Tj-sQe"/>
+                            <constraint firstItem="X3I-kq-iQ3" firstAttribute="height" secondItem="W3Y-0j-krF" secondAttribute="height" multiplier="0.352273" id="zrC-O4-Yag"/>
+                        </constraints>
+                    </view>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="done-icon-4" translatesAutoresizingMaskIntoConstraints="NO" id="Bjt-G4-4bQ">
+                        <rect key="frame" x="20" y="46" width="38" height="38"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="38" id="LuU-5b-lDl"/>
+                            <constraint firstAttribute="height" constant="38" id="Y9T-oR-EuE"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Bjt-G4-4bQ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="46" id="GsM-pX-zIf"/>
+                <constraint firstItem="W3Y-0j-krF" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.676923" id="H4n-F0-jJC"/>
+                <constraint firstItem="AOd-G9-l1k" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="J7K-Nh-lEK"/>
+                <constraint firstItem="AOd-G9-l1k" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.123077" id="WVV-85-sCd"/>
+                <constraint firstItem="Bjt-G4-4bQ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="bl6-bP-peZ"/>
+                <constraint firstItem="W3Y-0j-krF" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="0.772947" id="d1Q-aJ-jZe"/>
+                <constraint firstItem="W3Y-0j-krF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="21" id="hfA-4B-kVZ"/>
+                <constraint firstAttribute="trailing" secondItem="W3Y-0j-krF" secondAttribute="trailing" constant="20" id="oBB-de-L1J"/>
+                <constraint firstItem="AOd-G9-l1k" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="55" id="oWf-09-lus"/>
+            </constraints>
+            <connections>
+                <outlet property="deleteAudioButton" destination="l34-PV-hRD" id="sde-lt-wV7"/>
+                <outlet property="doneIcon" destination="Bjt-G4-4bQ" id="1PJ-VE-Dvo"/>
+                <outlet property="editButton" destination="rI2-n1-pMQ" id="D3J-Th-MXT"/>
+                <outlet property="editHomeworkLabel" destination="ebn-zi-mfQ" id="osk-Qa-jSB"/>
+                <outlet property="fullHomeworkLabel" destination="TzA-PU-sIZ" id="01x-wt-OuS"/>
+                <outlet property="homeworkLabel" destination="lh2-T2-PLg" id="0yO-Ng-EnE"/>
+                <outlet property="lessonsName" destination="x7u-xv-gpd" id="zYN-9t-Fx1"/>
+                <outlet property="linearView" destination="VgB-ZW-qkq" id="9Vi-Gf-htm"/>
+                <outlet property="mainLessonView" destination="W3Y-0j-krF" id="ZVa-Se-UC1"/>
+                <outlet property="playButton" destination="a2o-zZ-YTT" id="2rD-YF-wpl"/>
+                <outlet property="recordButton" destination="KnI-8S-IVb" id="FTn-xa-MGQ"/>
+                <outlet property="showFullHomeworkButton" destination="X3I-kq-iQ3" id="AFh-88-kg6"/>
+                <outlet property="timeLabel" destination="AOd-G9-l1k" id="SrA-WB-2rf"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="82.366071428571431"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="done-icon-4" width="256" height="256"/>
+        <image name="edit" width="24" height="24"/>
+        <image name="microphone-2" width="24" height="24"/>
+        <image name="play-circle" width="24" height="24"/>
+        <image name="trash" width="24" height="24"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
