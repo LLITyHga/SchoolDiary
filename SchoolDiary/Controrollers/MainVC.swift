@@ -446,7 +446,7 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
                 cell.dayLabel.textColor = .white
                 chooseDayArray[indexPath.row].selected = false
             }
-            else      if currentDay[0] == cell.dayLabel.text && currentDay[1] == cell.weekDayLabel.text {
+            else      if currentDay[0].capitalized == cell.dayLabel.text && currentDay[1].capitalized == cell.weekDayLabel.text {
                 cell.linearView.isHidden = true
                 cell.backgroundColor = .orange
                 cell.weekDayLabel.textColor = .white

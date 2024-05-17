@@ -17,6 +17,7 @@ import SafariServices
 
 
 class SubjectVC: UIViewController, UICollectionViewDelegate {
+ 
     @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var bigLabel: UILabel!
     @IBOutlet weak var subjectTextField: UITextField!
@@ -36,10 +37,11 @@ class SubjectVC: UIViewController, UICollectionViewDelegate {
     var thursday = [Lesson3]()
     var friday = [Lesson3]()
     @IBOutlet weak var subjectCV: UICollectionView!
-    
+    let subject = Subject()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        subject.delegate = self
         plusButton.frame = CGRect(x: (self.view?.frame.size.width)! / 2.7 , y: (self.view?.frame.size.height)! / 1.27 , width: view.fs_width/3.75, height: view.fs_width/3.75)
         addField.isHidden = true
         subjectCV.register(LessonCVCell.nib(), forCellWithReuseIdentifier: "LessonCVCell")
@@ -52,146 +54,26 @@ class SubjectVC: UIViewController, UICollectionViewDelegate {
         addField.isHidden = true
     }
     @IBAction func backBTN(_ sender: UIButton) {
-        if count > 0 {
-            count -= 1
-            bigLabel.text = bigLabelArray[count]
-            subjectCV.reloadData()
-        }else{
-            dismiss(animated: true)
-        }
+        subject.backTap()
+        subjectCV.reloadData()
     }
     @IBAction func forwardBTN(_ sender: UIButton) {
-        if count < 4 {
-        count += 1
-        bigLabel.text = bigLabelArray[count]
+        subject.forwardTap()
         addField.isHidden = true
         subjectCV.reloadData()
-        }else{
-            do{
-                try realm.write{
-                    for i in monday {
-                        realm.add(i)
-                    }
-                    for i in tuesday {
-                        realm.add(i)
-                    }
-                    for i in wednesday {
-                        realm.add(i)
-                    }
-                    for i in thursday {
-                        realm.add(i)
-                    }
-                    for i in friday {
-                        realm.add(i)
-                    }
-
-                }
-            }catch{
-                print("Error saving imageUrl")
+        let vc = self.storyboard!.instantiateViewController(withIdentifier: "MainVC") as! MainVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
             }
-            let vc = self.storyboard!.instantiateViewController(withIdentifier: "MainVC") as! MainVC
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        }
-    }
     @IBAction func plusBTN(_ sender: UIButton) {
         addField.isHidden = false
     }
     @IBAction func nextBTN(_ sender: UIButton) {
-        if subjectTextField.text != ""  {
-            let lesson = Lesson3()
-            lesson.title = subjectTextField.text!
-            lesson.time = timeTextField.text!
-                    guard let userUID = Auth.auth().currentUser?.uid else {
-                        return
-                    }
-        switch count {
-        case 0:lesson.dayOfWeek = "monday"
-            donePressed()
-            arrayAddedTime.append(timeTextField.text ?? "")
-            lesson.time = timeTextField.text!
-            lesson.timeInMinutes = timeInMinutes
-            lesson.userUID = userUID
-            lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
-            lesson.key = "\(lesson.title)-\(lesson.timeInMinutes)-\(lesson.userUID)"
-            var check = true
-            for i in monday{
-                if i.key == lesson.key{check = false}
-            }
-            if check {monday.append(lesson)}
-            subjectCV.reloadData()
-        case 1:lesson.dayOfWeek = "tuesday"
-            donePressed()
-            arrayAddedTime.append(timeTextField.text ?? "")
-            lesson.time = timeTextField.text!
-            lesson.timeInMinutes = timeInMinutes
-            lesson.userUID = userUID
-            lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
-            lesson.key = "\(lesson.title)-\(lesson.timeInMinutes)-\(lesson.userUID)"
-            var check = true
-            for i in tuesday{
-                if i.key == lesson.key{check = false}
-            }
-            if check {tuesday.append(lesson)}
-            subjectCV.reloadData()
-        case 2:lesson.dayOfWeek = "wednesday"
-            donePressed()
-            arrayAddedTime.append(timeTextField.text ?? "")
-            lesson.time = timeTextField.text!
-            lesson.timeInMinutes = timeInMinutes
-            lesson.userUID = userUID
-            lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
-            lesson.key = "\(lesson.title)-\(lesson.timeInMinutes)-\(lesson.userUID)"
-            var check = true
-            for i in wednesday{
-                if i.key == lesson.key{check = false}
-            }
-            if check {wednesday.append(lesson)}
-            subjectCV.reloadData()
-        case 3:lesson.dayOfWeek = "thursday"
-            donePressed()
-            arrayAddedTime.append(timeTextField.text ?? "")
-            lesson.time = timeTextField.text!
-            lesson.timeInMinutes = timeInMinutes
-            lesson.userUID = userUID
-            lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
-            lesson.key = "\(lesson.title)-\(lesson.timeInMinutes)-\(lesson.userUID)"
-            var check = true
-            for i in thursday{
-                if i.key == lesson.key{check = false}
-            }
-            if check {thursday.append(lesson)}
-            subjectCV.reloadData()
-        case 4:lesson.dayOfWeek = "friday"
-            donePressed()
-            arrayAddedTime.append(timeTextField.text ?? "")
-            lesson.time = timeTextField.text!
-            lesson.timeInMinutes = timeInMinutes
-            lesson.userUID = userUID
-            lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
-            lesson.key = "\(lesson.title)-\(lesson.timeInMinutes)-\(lesson.userUID)"
-            var check = true
-            for i in friday{
-                if i.key == lesson.key{check = false}
-            }
-            if check {friday.append(lesson)}
-            subjectCV.reloadData()
-        default:
-            donePressed()
-            arrayAddedSubjects.append(subjectTextField.text ?? "")
-            arrayAddedTime.append(timeTextField.text ?? "")
-        }
+        subject.nextTapped(subjectTextField: subjectTextField.text ?? "", timeTextField: timeTextField.text ?? "")
         subjectTextField.text = ""
         timeTextField.text = ""
-        subjectCV.reloadData()
         addField.isHidden = true
-        }else{
-            let alert = UIAlertController(title: "Введіть назву предмета", message: "", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "OK", style: .default, handler: nil)
-                
-            alert.addAction(cancel)
-            present(alert, animated: true, completion: nil)
-        }
+        subjectCV.reloadData()
     }
     
 
@@ -199,27 +81,11 @@ class SubjectVC: UIViewController, UICollectionViewDelegate {
 }
 extension SubjectVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch count {
-        case 0: monday[indexPath.row].selected = !monday[indexPath.row].selected
-            collectionView.reloadData()
-        case 1: tuesday[indexPath.row].selected = !tuesday[indexPath.row].selected
-        case 2: wednesday[indexPath.row].selected = !wednesday[indexPath.row].selected
-        case 3: thursday[indexPath.row].selected = !thursday[indexPath.row].selected
-        case 4: wednesday[indexPath.row].selected = !wednesday[indexPath.row].selected
-        default:
-            return
-        }
+        subject.selectedItem(row: indexPath.row)
+        //CV reload??
     }
 func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    switch count {
-    case 0:return monday.count
-    case 1:return tuesday.count
-    case 2:return wednesday.count
-    case 3:return thursday.count
-    case 4:return friday.count
-    default:
-        return 0
-    }
+    return subject.setNumberOfItemsInSection()
 }
 
 func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -347,6 +213,24 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
         }
         self.view.endEditing(true)
     }
+}
+extension SubjectVC: SubjectDelegate {
+    func didDonePressed() {
+        donePressed()
+    }
+    
+    func nextDidNotTapped() {
+        let alert = UIAlertController(title: "Введіть назву предмета", message: "", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func didSetLabel(_ string: String) {
+        bigLabel.text = string
+    }
+    
 }
 
 

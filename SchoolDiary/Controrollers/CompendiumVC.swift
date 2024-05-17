@@ -3,35 +3,54 @@ import AVFoundation
 
 class CompendiumVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1)
         // Кнопка для відкриття камери
-        let openCameraButton = UIButton(type: .system)
-        openCameraButton.setImage(UIImage(named: "Ellipse 21"), for: .normal) 
+        let openCameraButton = UIButton(type: .custom)
+        openCameraButton.setImage(UIImage(named: "camera"), for: .normal)
+        openCameraButton.imageView?.contentMode = .scaleAspectFit
         openCameraButton.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
         view.addSubview(openCameraButton)
         openCameraButton.translatesAutoresizingMaskIntoConstraints = false
         
         // Кнопка для відкриття галереї
-        let openGalleryButton = UIButton(type: .system)
-        openGalleryButton.setImage(UIImage(named: "Next"), for: .normal)
+        let openGalleryButton = UIButton(type: .custom)
+        openGalleryButton.setImage(UIImage(named: "galerry"), for: .normal)
+        openGalleryButton.imageView?.contentMode = .scaleAspectFit
         openGalleryButton.addTarget(self, action: #selector(openGallery), for: .touchUpInside)
         view.addSubview(openGalleryButton)
         openGalleryButton.translatesAutoresizingMaskIntoConstraints = false
         
+        //back button
+        let backButton = UIButton(type: .custom)
+        let img = UIImage(systemName: "arrowshape.turn.up.left")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        backButton.setImage(img, for: .normal)
+        backButton.imageView?.contentMode = .scaleAspectFit
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+       view.addSubview(backButton)
+
         // Обмеження для кнопок
         NSLayoutConstraint.activate([
-            openCameraButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            openCameraButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -screenWidth * 0.25),
-            openCameraButton.widthAnchor.constraint(equalToConstant: screenWidth * 0.3),
-            openCameraButton.heightAnchor.constraint(equalToConstant: screenWidth * 0.3),
+            openCameraButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            openCameraButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            openCameraButton.widthAnchor.constraint(equalToConstant: screenWidth),
+            openCameraButton.heightAnchor.constraint(equalToConstant: screenHeight / 2),
             
-            openGalleryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            openGalleryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: screenWidth * 0.25),
-            openGalleryButton.widthAnchor.constraint(equalToConstant: screenWidth * 0.3),
-            openGalleryButton.heightAnchor.constraint(equalToConstant: screenWidth * 0.3)
+            openGalleryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 8),
+            openGalleryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            openGalleryButton.widthAnchor.constraint(equalToConstant: screenWidth),
+            openGalleryButton.heightAnchor.constraint(equalToConstant: screenHeight / 2),
+            
+            backButton.heightAnchor.constraint(equalToConstant: 40),
+            backButton.widthAnchor.constraint(equalToConstant: 40),
+            backButton.widthAnchor.constraint(equalTo: backButton.superview!.widthAnchor, multiplier: 0.1),
+            backButton.heightAnchor.constraint(equalTo: backButton.superview!.heightAnchor, multiplier: 0.1),
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
+            backButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
     }
     func requestCameraPermission() {
@@ -135,5 +154,8 @@ class CompendiumVC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+    @objc func back() {
+        self.dismiss(animated: true)
     }
 }
