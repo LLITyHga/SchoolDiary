@@ -19,12 +19,12 @@ protocol SubjectDelegate: UIViewController {
     func didSetLabel(_ string: String)
     func nextDidNotTapped ()
     func didDonePressed ()
+    func lessonCellData(cellData: Lesson3)
 }
 
 
 class Subject {
     let realm = try! Realm()
-    let datePicker = UIDatePicker()
     var selected1 = [Bool]()
     var count = 0
     var timeInMinutes = 0 //for sort lesson in a day by time
@@ -79,6 +79,9 @@ class Subject {
             }catch{
                 print("Error saving imageUrl")
             }
+            let vc = delegate?.storyboard!.instantiateViewController(withIdentifier: "MainVC") as! MainVC
+            vc.modalPresentationStyle = .fullScreen
+            delegate?.present(vc, animated: true, completion: nil)
         }
 
     }
@@ -171,11 +174,12 @@ class Subject {
         case 1: tuesday[row].selected = !tuesday[row].selected
         case 2: wednesday[row].selected = !wednesday[row].selected
         case 3: thursday[row].selected = !thursday[row].selected
-        case 4: wednesday[row].selected = !wednesday[row].selected
+        case 4: friday[row].selected = !friday[row].selected
         default:
             return
         }
     }
+    
     func setNumberOfItemsInSection() -> Int {
         switch count {
         case 0: return monday.count
@@ -185,12 +189,40 @@ class Subject {
         case 4: return friday.count
         default:
             return 0
-           // delegate?.didSetNumberOfItemsInSection(0)
         }
-//    case 1: delegate?.didSetNumberOfItemsInSection(tuesday.count)
-//    case 2: delegate?.didSetNumberOfItemsInSection(wednesday.count)
-//    case 3: delegate?.didSetNumberOfItemsInSection(thursday.count)
-//    case 4: delegate?.didSetNumberOfItemsInSection(friday.count)
+
+    }
+    
+    func sendCellSettings(cellNumber: Int) {
+        var dataCell = Lesson3()
+        switch count {
+        case 0: dataCell = monday[cellNumber]
+        case 1: dataCell = tuesday[cellNumber]
+        case 2: dataCell = wednesday[cellNumber]
+        case 3: dataCell = thursday[cellNumber]
+        case 4: dataCell = friday[cellNumber]
+        default:
+            print("trubble in sendCellSettings")
+            dataCell = monday[cellNumber]
+        }
+        delegate?.lessonCellData(cellData: dataCell)
+    }
+    func deleteLesson (lesson: Lesson3) {
+        monday.enumerated().forEach { index, item in
+            if item.key == lesson.key { monday.remove(at: index)}
+        }
+        tuesday.enumerated().forEach { index, item in
+            if item.key == lesson.key { tuesday.remove(at: index)}
+        }
+        wednesday.enumerated().forEach { index, item in
+            if item.key == lesson.key { wednesday.remove(at: index)}
+        }
+        thursday.enumerated().forEach { index, item in
+            if item.key == lesson.key { thursday.remove(at: index)}
+        }
+        friday.enumerated().forEach { index, item in
+            if item.key == lesson.key { friday.remove(at: index)}
+        }
     }
 }
 

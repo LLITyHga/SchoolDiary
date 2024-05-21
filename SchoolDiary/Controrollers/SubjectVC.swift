@@ -10,7 +10,6 @@ import Firebase
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
-import RealmSwift
 import GoogleSignIn
 import GoogleSignInSwift
 import SafariServices
@@ -23,21 +22,10 @@ class SubjectVC: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var subjectTextField: UITextField!
     @IBOutlet weak var timeTextField: UITextField!
     @IBOutlet weak var addField: UIVisualEffectView!
-    let realm = try! Realm()
     let datePicker = UIDatePicker()
-    var selected1 = [Bool]()
-    var count = 0
-    var timeInMinutes = 0 //for sort lesson in a day by time
-    var bigLabelArray = ["Понеділок", "Вівторок", "Середа", "Четвер", "П`ятниця"]
-    var arrayAddedSubjects = [String]()
-    var arrayAddedTime = [String]()
-    var monday = [Lesson3]()
-    var tuesday = [Lesson3]()
-    var wednesday = [Lesson3]()
-    var thursday = [Lesson3]()
-    var friday = [Lesson3]()
     @IBOutlet weak var subjectCV: UICollectionView!
     let subject = Subject()
+    var cellData = Lesson3()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,9 +49,6 @@ class SubjectVC: UIViewController, UICollectionViewDelegate {
         subject.forwardTap()
         addField.isHidden = true
         subjectCV.reloadData()
-        let vc = self.storyboard!.instantiateViewController(withIdentifier: "MainVC") as! MainVC
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
             }
     @IBAction func plusBTN(_ sender: UIButton) {
         addField.isHidden = false
@@ -81,8 +66,9 @@ class SubjectVC: UIViewController, UICollectionViewDelegate {
 }
 extension SubjectVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+      //  print("row = \(indexPath.row)")
         subject.selectedItem(row: indexPath.row)
-        //CV reload??
+        collectionView.reloadData()
     }
 func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return subject.setNumberOfItemsInSection()
@@ -90,97 +76,18 @@ func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection s
 
 func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LessonCVCell", for: indexPath) as! LessonCVCell
-    switch count {
-    case 0:
-        cell.timeLabel.text = monday[indexPath.row].time
-        cell.nameOfSubject.text = monday[indexPath.row].title
-        cell.btnTapAction = {
-            () in
-            self.monday.remove(at: indexPath.row)
-            collectionView.reloadData()
-        }
-        if monday[indexPath.row].selected {
-            cell.linearView2.isHidden = false
-            cell.deleteBTNOutlet.isHidden = false
-            cell.timeLabel.isHidden = true
-        } else {
-            cell.linearView2.isHidden = true
-            cell.deleteBTNOutlet.isHidden = true
-            cell.timeLabel.isHidden = false
-        }
-        return cell
-    case 1:cell.timeLabel.text = tuesday[indexPath.row].time
-        cell.nameOfSubject.text = tuesday[indexPath.row].title
-        cell.btnTapAction = {
-            () in
-            self.tuesday.remove(at: indexPath.row)
-            collectionView.reloadData()
-        }
-        if tuesday[indexPath.row].selected {
-            cell.linearView2.isHidden = false
-            cell.deleteBTNOutlet.isHidden = false
-            cell.timeLabel.isHidden = true
-        } else {
-            cell.linearView2.isHidden = true
-            cell.deleteBTNOutlet.isHidden = true
-            cell.timeLabel.isHidden = false
-        }
-        return cell
-    case 2:cell.timeLabel.text = arrayAddedTime[indexPath.row]
-        cell.nameOfSubject.text = wednesday[indexPath.row].title
-        cell.btnTapAction = {
-            () in
-            self.wednesday.remove(at: indexPath.row)
-            collectionView.reloadData()
-        }
-        if wednesday[indexPath.row].selected {
-            cell.linearView2.isHidden = false
-            cell.deleteBTNOutlet.isHidden = false
-            cell.timeLabel.isHidden = true
-        } else {
-            cell.linearView2.isHidden = true
-            cell.deleteBTNOutlet.isHidden = true
-            cell.timeLabel.isHidden = false
-        }
-        return cell
-    case 3:cell.timeLabel.text = arrayAddedTime[indexPath.row]
-        cell.nameOfSubject.text = thursday[indexPath.row].title
-        cell.btnTapAction = {
-            () in
-            self.thursday.remove(at: indexPath.row)
-            collectionView.reloadData()
-        }
-        if thursday[indexPath.row].selected {
-            cell.linearView2.isHidden = false
-            cell.deleteBTNOutlet.isHidden = false
-            cell.timeLabel.isHidden = true
-        } else {
-            cell.linearView2.isHidden = true
-            cell.deleteBTNOutlet.isHidden = true
-            cell.timeLabel.isHidden = false
-        }
-        return cell
-    case 4:cell.timeLabel.text = arrayAddedTime[indexPath.row]
-        cell.nameOfSubject.text = friday[indexPath.row].title
-        cell.btnTapAction = {
-            () in
-            self.friday.remove(at: indexPath.row)
-            collectionView.reloadData()
-        }
-        if friday[indexPath.row].selected {
-            cell.linearView2.isHidden = false
-            cell.deleteBTNOutlet.isHidden = false
-            cell.timeLabel.isHidden = true
-        } else {
-            cell.linearView2.isHidden = true
-            cell.deleteBTNOutlet.isHidden = true
-            cell.timeLabel.isHidden = false
-        }
-        return cell
-    default:
-        return cell
+    subject.sendCellSettings(cellNumber: indexPath.row)
+    cell.setupCell(lesson: cellData, subj: subject, index: indexPath.row)
+    cell.btnTapAction = {
+        () in
+        collectionView.reloadData()
     }
-    
+    cell.btnTapDelete = { [self]
+        () in
+        subject.deleteLesson(lesson: cell.itemToDelete)
+        collectionView.reloadData()
+    }
+    return cell
 }
     func createToolbar() -> UIToolbar {
         let toolbar = UIToolbar()
@@ -209,12 +116,17 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
         let hours = components?[0]
         let minutes = components?[1]
         if (hours != nil) && minutes != nil {
-        timeInMinutes = hours! * 60 + minutes!
+        subject.timeInMinutes = hours! * 60 + minutes!
         }
         self.view.endEditing(true)
     }
 }
 extension SubjectVC: SubjectDelegate {
+    func lessonCellData(cellData: Lesson3) {
+        self.cellData = cellData
+    }
+    
+    
     func didDonePressed() {
         donePressed()
     }

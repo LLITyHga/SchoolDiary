@@ -32,14 +32,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
             let realm = try! Realm()
-            let initialViewController: UIViewController
+        var initialViewController: UIViewController
 
             if realm.objects(User2.self).isEmpty {
                 initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC")
             } else {
                 initialViewController = storyboard.instantiateViewController(withIdentifier: "MainVC")
             }
-
+      //  initialViewController = storyboard.instantiateViewController(withIdentifier: "SubjectVC")
             window.rootViewController = initialViewController
             window.makeKeyAndVisible()
 

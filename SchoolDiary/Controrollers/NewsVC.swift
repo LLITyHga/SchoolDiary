@@ -67,7 +67,7 @@ class NewsVC: UIViewController {
                     for i in news.articles{
                         self.articles.append(i)
                     }
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [self] in
                         indicator.stopAnimating()
                         collectionView.reloadData()
                     }

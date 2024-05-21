@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LessonCVCell: UICollectionViewCell {
     @IBOutlet weak var timeLabel: UILabel!
@@ -18,6 +19,13 @@ class LessonCVCell: UICollectionViewCell {
     @IBOutlet weak var linearView2: UIView!
     var btnTapAction : (()->())?
     var btnTapEdit : (()->())?
+    var btnTapDelete : (()->())?
+    var cellObj: Lesson3?
+    var subject: Subject?
+    var itemToDelete = Lesson3()
+    var numberOfItem = 0
+    var editor: EditorLessons?
+    var index: Int?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,9 +51,170 @@ class LessonCVCell: UICollectionViewCell {
         return UINib(nibName: "LessonCVCell", bundle: nil)
     }
     @IBAction func deleteBTN(_ sender: UIButton) {
+        print(cellObj?.key ?? "")
+        
+        switch subject?.count {
+        case 0:
+    //        print("flag\(subject.monday.count)")
+            subject?.monday.forEach({ item in
+                print(item.key)
+                print(numberOfItem)
+                if item.key == cellObj?.key {
+                    itemToDelete = item
+                    btnTapDelete?()
+                }
+                numberOfItem += 1
+        })
+            if editor != nil {
+                do{
+                    let realm = try! Realm()
+                    try realm.write {
+                        if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", nameOfSubject.text!, subject?.monday[index ?? 0].timeInMinutes).first {
+                            realm.delete(lessonToDelete)
+                        }
+                        subject?.monday.remove(at: index ?? 0)
+                        // send information to mainVC about changes in database
+                        NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)
+                        btnTapAction?()
+                    }
+                }catch{
+                    print("can`t deleete from realm")
+                }
+            }
+        case 1:
+            subject?.tuesday.forEach({ item in
+                print(item.key)
+                print(numberOfItem)
+                if item.key == cellObj?.key {
+                    itemToDelete = item
+                    btnTapDelete?()
+                }
+                numberOfItem += 1
+        })
+            if editor != nil {
+                do{
+                    let realm = try! Realm()
+                    try realm.write {
+                        if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", nameOfSubject.text!, subject?.tuesday[index ?? 0].timeInMinutes).first {
+                            realm.delete(lessonToDelete)
+                        }
+                        subject?.tuesday.remove(at: index ?? 0)
+                        // send information to mainVC about changes in database
+                        NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)
+                        btnTapAction?()
+                    }
+                }catch{
+                    print("can`t deleete from realm")
+                }
+            }
+        case 2:
+            subject?.wednesday.forEach({ item in
+                if item.key == cellObj?.key {
+                    itemToDelete = item
+                    btnTapDelete?()
+                }
+                numberOfItem += 1
+        })
+            if editor != nil {
+                do{
+                    let realm = try! Realm()
+                    try realm.write {
+                        if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", nameOfSubject.text!, subject?.wednesday[index ?? 0].timeInMinutes).first {
+                            realm.delete(lessonToDelete)
+                        }
+                        subject?.wednesday.remove(at: index ?? 0)
+                        // send information to mainVC about changes in database
+                        NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)
+                        btnTapAction?()
+                    }
+                }catch{
+                    print("can`t deleete from realm")
+                }
+            }
+        case 3:
+            subject?.thursday.forEach({ item in
+                print(item.key)
+                print(numberOfItem)
+                if item.key == cellObj?.key {
+                    itemToDelete = item
+                    btnTapDelete?()
+                }
+                numberOfItem += 1
+        })
+            if editor != nil {
+                do{
+                    let realm = try! Realm()
+                    try realm.write {
+                        if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", nameOfSubject.text!, subject?.thursday[index ?? 0].timeInMinutes).first {
+                            realm.delete(lessonToDelete)
+                        }
+                        subject?.thursday.remove(at: index ?? 0)
+                        // send information to mainVC about changes in database
+                        NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)
+                        btnTapAction?()
+                    }
+                }catch{
+                    print("can`t deleete from realm")
+                }
+            }
+        case 4:
+            subject?.friday.forEach({ item in
+                print(item.key)
+                print(numberOfItem)
+                if item.key == cellObj?.key {
+                    itemToDelete = item
+                    btnTapDelete?()
+                }
+                numberOfItem += 1
+        })
+            if editor != nil {
+                do{
+                    let realm = try! Realm()
+                    try realm.write {
+                        if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", nameOfSubject.text!, subject?.friday[index ?? 0].timeInMinutes).first {
+                            realm.delete(lessonToDelete)
+                        }
+                        subject?.friday.remove(at: index ?? 0)
+                        // send information to mainVC about changes in database
+                        NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)
+                        btnTapAction?()
+                    }
+                }catch{
+                    print("can`t deleete from realm")
+                }
+            }
+        default:
+            print("default in DeleteBTN")
+        }
         btnTapAction?()
     }
+    
     @IBAction func editBTN(_ sender: UIButton) {
         btnTapEdit?()
     }
+    
+    func setupCell(lesson: Lesson3, subj: AnyObject, index: Int) {
+        cellObj = lesson
+        self.index = index
+        if subj is Subject {
+            subject = subj as? Subject
+        }
+        if subj is EditorLessons {
+            editor = subj as? EditorLessons
+        }
+        timeLabel.text = lesson.time
+        nameOfSubject.text = lesson.title
+        if lesson.selected {
+            linearView2.isHidden = false
+            deleteBTNOutlet.isHidden = false
+            timeLabel.isHidden = true
+            if editor != nil {editButton.isHidden = false}
+        } else {
+            linearView2.isHidden = true
+            deleteBTNOutlet.isHidden = true
+            timeLabel.isHidden = false
+            if editor != nil {editButton.isHidden = true}
+        }
+    }
+
 }
