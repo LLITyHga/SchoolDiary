@@ -65,7 +65,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     @IBAction func regNextBTN(_ sender: UIButton) {
         if let email = regEmailTextfield.text, let password = regPasswordTextField.text{
-        basicSignIn(email: email, password: password)
+        basicRegIn(email: email, password: password)
         }
     }
     @IBAction func regShowPasswordBTN(_ sender: UIButton) {
@@ -276,8 +276,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     func basicRegIn(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let e = error{
-                print(e)
-            }else{       
+                print(e.localizedDescription)
+                let resetFailedAlert = UIAlertController(title: "\(e.localizedDescription)", message: "", preferredStyle: .alert)
+                resetFailedAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(resetFailedAlert, animated: true, completion: nil)
+            }else{
                     Auth.auth().signIn(withEmail: email, password: password) { [self] authResult, error in
                     if let x = error{
                         let err = x as NSError

@@ -25,8 +25,8 @@ class MainLessonCVCell: UICollectionViewCell, UITextFieldDelegate, AVAudioRecord
     @IBOutlet weak var mainLessonView: UIView!
     @IBOutlet weak var homeworkLabel: UILabel!
     @IBOutlet weak var linearView: UIView!
-    var audioRecorder: AVAudioRecorder!
-    var audioPlayer: AVAudioPlayer!
+    var audioRecorder = AVAudioRecorder()
+    var audioPlayer = AVAudioPlayer()
     let realm = try! Realm()
     var btnTapShow : (()->())?
     var btnTapHide : (()->())?
@@ -36,6 +36,7 @@ class MainLessonCVCell: UICollectionViewCell, UITextFieldDelegate, AVAudioRecord
     var btnTapDelete : (()->())?
     var reloadData : (()->())?
     var currentDay = ChooseDay2()
+    var main = Main()
 
     
     
@@ -68,7 +69,6 @@ class MainLessonCVCell: UICollectionViewCell, UITextFieldDelegate, AVAudioRecord
     @IBAction func editBTN(_ sender: UIButton) {
         editHomeworkLabel.isHidden = false
         editHomeworkLabel.becomeFirstResponder()
-
     }
 
     @IBAction func recordBTN(_ sender: UIButton) {
@@ -91,7 +91,6 @@ class MainLessonCVCell: UICollectionViewCell, UITextFieldDelegate, AVAudioRecord
         }
         if recordButton.currentImage == UIImage(named: "microphone-2"){
             setupRecord(filename: "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)"+".m4a")
-            audioRecorder.record()
             recordButton.setImage(UIImage(named: "record-circle"), for: .normal)
             playButton.isEnabled = false
         }else{
@@ -155,7 +154,7 @@ print("can`t delete audiofile")
         let hw = realm.objects(Homework2.self).filter("userUID == %@", userUID)
         for i in hw {
             if i.key == "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)" {
-                try! realm.write{
+                try? realm.write{
                     realm.delete(i)
                 }
             }
@@ -204,6 +203,100 @@ print("can`t delete audiofile")
         reloadData?()
     }
     
+    func setupCell(lesson: Lesson6, homework: [Homework2], main: Main, index: Int) {
+        self.main = main
+        if let userUID = Auth.auth().currentUser?.uid {
+            currentDay.day = main.chooseDayArray[main.count].day
+            lessonsName.text = lesson.title
+            timeLabel.text = lesson.time
+            homeworkLabel.text = ""
+            var dayHomework = [Homework2]()
+            for i in main.weekHomework {
+                if i.day.ddMMyyyy == main.chooseDayArray[main.count].day.ddMMyyyy {
+                    dayHomework.append(i)
+                }
+            }
+            for i in dayHomework {
+                if i.lesson == lesson.title {
+                    homeworkLabel.text = i.text
+                    fullHomeworkLabel.text = i.text
+                }
+            }
+            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let audiofileName = path.appendingPathComponent(main.chooseDayArray[main.count].day.ddMMyyyy+lessonsName.text!+"\(userUID)"+".m4a")
+            if let audiofilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("\(main.chooseDayArray[main.count].day.ddMMyyyy)\(lessonsName.text!)\(userUID).m4a"){
+                if FileManager.default.fileExists(atPath: audiofilePath.path) {
+                    let request = SFSpeechURLRecognitionRequest(url: audiofilePath)
+                    
+                    let recognizer = SFSpeechRecognizer()
+                    
+                    recognizer?.recognitionTask(with: request) { [self] result, error in
+                        guard let result = result else {
+                            if let error = error {
+                                print("Помилка під час розпізнавання: \(error)")
+                            }
+                            return
+                        }
+                        
+                        let text = result.bestTranscription.formattedString
+                        print("Розпізнаний текст: \(text)")
+                        let homework = Homework2()
+                        homework.day = currentDay.day
+                        homework.text = text
+                        homework.lesson = lessonsName.text ?? ""
+                        homeworkLabel.text = text
+                        homework.userUID = userUID
+                        homework.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
+                        homework.key = "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)"
+                        do{
+                            try realm.write{
+                                realm.add(homework, update: .modified)
+                            }
+                        }catch{
+                            print("Error saving homework")
+                        }
+                        homeworkLabel.text = text
+                        fullHomeworkLabel.text = text
+                        editHomeworkLabel.text = ""
+                        editHomeworkLabel.isHidden = true
+                        showFullHomeworkButton.isHidden = false
+                    }
+                } else {
+                    print("Файл не знайдено.")
+                }
+            }else{
+                print("Не вдалося створити шлях до файлу.")
+            }
+            
+            playButton.isHidden = true
+            deleteAudioButton.isHidden = true
+            for ii in main.urls {
+                if ii == audiofileName {
+                    playButton.isHidden = false
+                    playButton.isEnabled = true
+                    deleteAudioButton.isHidden = false
+                }
+            }
+        }
+        if lesson.selected {
+            fullHomeworkLabel.textColor = .white
+            linearView.isHidden = false
+            doneIcon.isHidden = false
+            timeLabel.isHidden = true
+            lessonsName.textColor = .white
+            homeworkLabel.textColor = .white
+        }else{
+            fullHomeworkLabel.textColor = .black
+            linearView.isHidden = true
+            doneIcon.isHidden = true
+            timeLabel.isHidden = false
+            lessonsName.textColor = .black
+            homeworkLabel.textColor = .black
+        }
+    
+    }
+    
+    
     // MARK: - Record settings
     
     func getDocumentsDirectory() -> URL {
@@ -212,19 +305,37 @@ print("can`t delete audiofile")
     }
     
     func setupRecord(filename: String) {
-        let audiofileName = getDocumentsDirectory().appendingPathComponent(filename)
-        let recordSetting = [AVFormatIDKey : kAudioFormatAppleLossless,
-                        AVEncoderAudioQualityKey : AVAudioQuality.max.rawValue,
-                        AVEncoderBitRateKey : 320000,
-                     AVNumberOfChannelsKey : 2,
-                           AVSampleRateKey : 44100.2] as [String : Any]
-        do {
-            audioRecorder = try AVAudioRecorder(url: audiofileName, settings: recordSetting)
-            audioRecorder.delegate = self
-            audioRecorder.prepareToRecord()
-        }catch{
-            print(error)
-        }
+//        let audiofileName = getDocumentsDirectory().appendingPathComponent(filename)
+//        let recordSetting = [AVFormatIDKey : kAudioFormatAppleLossless,
+//                        AVEncoderAudioQualityKey : AVAudioQuality.max.rawValue,
+//                        AVEncoderBitRateKey : 320000,
+//                     AVNumberOfChannelsKey : 2,
+//                           AVSampleRateKey : 44100.2] as [String : Any]
+//        do {
+//            audioRecorder = try AVAudioRecorder(url: audiofileName, settings: recordSetting)
+//            audioRecorder.delegate = self
+//            audioRecorder.prepareToRecord()
+//        }catch{
+//            print("Setup audio ERROR", error)
+//        }
+        let audioSession = AVAudioSession.sharedInstance()
+                do {
+                    try audioSession.setCategory(.playAndRecord, mode: .default, options: [])
+                    try audioSession.setActive(true)
+
+                    let audioURL = getDocumentsDirectory().appendingPathComponent(filename)
+                    let settings: [String: Any] = [
+                        AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                        AVSampleRateKey: 44100,
+                        AVNumberOfChannelsKey: 2,
+                        AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+                    ]
+                    audioRecorder = try AVAudioRecorder(url: audioURL, settings: settings)
+                                audioRecorder.delegate = self
+                                audioRecorder.record()
+                            } catch {
+                                print("Error starting recording: \(error.localizedDescription)")
+                            }
     }
     
     func setupPlayer(filename: String) {
@@ -235,7 +346,7 @@ print("can`t delete audiofile")
             audioPlayer.prepareToPlay()
             audioPlayer.volume = 1.0
         }catch{
-            print(error)
+            print("Setup error: \(error)")
         }
     }
     

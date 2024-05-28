@@ -71,7 +71,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         
-        MainVC().syncWithFirebase()
+        Main().syncWithFirebase()
         
 //        // Called as the scene transitions from the foreground to the background.
 //        // Use this method to save data, release shared resources, and store enough scene-specific state information

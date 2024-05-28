@@ -43,7 +43,7 @@ class SubjectVC: UIViewController, UICollectionViewDelegate {
     }
     @IBAction func backBTN(_ sender: UIButton) {
         subject.backTap()
-        subjectCV.reloadData()
+        subjectCV.reloadData() //тут може бути краш
     }
     @IBAction func forwardBTN(_ sender: UIButton) {
         subject.forwardTap()
@@ -54,7 +54,9 @@ class SubjectVC: UIViewController, UICollectionViewDelegate {
         addField.isHidden = false
     }
     @IBAction func nextBTN(_ sender: UIButton) {
-        subject.nextTapped(subjectTextField: subjectTextField.text ?? "", timeTextField: timeTextField.text ?? "")
+        donePressed()
+        subject.timeForLesson = timeTextField.text ?? ""
+        subject.nextTapped(subjectTextField: subjectTextField.text ?? "")
         subjectTextField.text = ""
         timeTextField.text = ""
         addField.isHidden = true

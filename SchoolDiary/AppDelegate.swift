@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     var window: UIWindow?
+    var restrictOrientation: UIInterfaceOrientationMask = .portrait
     
     func application(_ app: UIApplication,
                      open url: URL,
@@ -64,6 +65,9 @@ let user = realm.objects(User2.self)
             }
     func applicationWillTerminate(_ application: UIApplication) {
         NotificationCenter.default.post(name: Notification.Name.timeLocalNotificationDidChange, object: nil)
+    }
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return self.restrictOrientation
     }
     
 }

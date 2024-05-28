@@ -150,26 +150,30 @@ class MenuVC: UIViewController {
         editLessonsMenu.isHidden = true
     }
     @IBAction func mondayEditBTN(_ sender: UIButton) {
+        editLessonsMenu.isHidden = true
         let vc = self.storyboard!.instantiateViewController(withIdentifier: "EditLessonsVC") as! EditLessonsVC
-        vc.count = 0
+        vc.editorLessons.count = 0
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     @IBAction func tuesdayEditBTN(_ sender: UIButton) {
+        editLessonsMenu.isHidden = true
         let vc = self.storyboard!.instantiateViewController(withIdentifier: "EditLessonsVC") as! EditLessonsVC
-        vc.count = 1
+        vc.editorLessons.count = 1
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     @IBAction func wednesdayEditBTN(_ sender: UIButton) {
+        editLessonsMenu.isHidden = true
         let vc = self.storyboard!.instantiateViewController(withIdentifier: "EditLessonsVC") as! EditLessonsVC
-        vc.count = 2
+        vc.editorLessons.count = 2
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     @IBAction func thursdayEditBTN(_ sender: UIButton) {
+        editLessonsMenu.isHidden = true
         let vc = self.storyboard!.instantiateViewController(withIdentifier: "EditLessonsVC") as! EditLessonsVC
-        vc.count = 3
+        vc.editorLessons.count = 3
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
@@ -201,8 +205,9 @@ class MenuVC: UIViewController {
        
     }
     @IBAction func fridayEditBTN(_ sender: UIButton) {
+        editLessonsMenu.isHidden = true
         let vc = self.storyboard!.instantiateViewController(withIdentifier: "EditLessonsVC") as! EditLessonsVC
-        vc.count = 4
+        vc.editorLessons.count = 4
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }

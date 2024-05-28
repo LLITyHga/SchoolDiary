@@ -36,6 +36,7 @@ class Subject {
     var wednesday = [Lesson3]()
     var thursday = [Lesson3]()
     var friday = [Lesson3]()
+    var timeForLesson = ""
     
     weak var delegate: SubjectDelegate?
     
@@ -47,9 +48,10 @@ class Subject {
         if count > 0 {
             count -= 1
             setLabel(bigLabelArray[count])
-        }else{
-            delegate?.dismiss(animated: true)
         }
+//        else{
+//            delegate?.dismiss(animated: true)
+//        }
     }
     
     func forwardTap() {
@@ -85,19 +87,20 @@ class Subject {
         }
 
     }
-    func nextTapped (subjectTextField: String, timeTextField: String) {
+    
+    func nextTapped (subjectTextField: String) {
         if subjectTextField != ""  {
             let lesson = Lesson3()
             lesson.title = subjectTextField
-            lesson.time = timeTextField
+            lesson.time = timeForLesson
                     guard let userUID = Auth.auth().currentUser?.uid else {
                         return
                     }
         switch count {
         case 0:lesson.dayOfWeek = "monday"
             delegate?.didDonePressed()
-            arrayAddedTime.append(timeTextField)
-            lesson.time = timeTextField
+            arrayAddedTime.append(timeForLesson)
+            lesson.time = timeForLesson
             lesson.timeInMinutes = timeInMinutes
             lesson.userUID = userUID
             lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
@@ -109,8 +112,8 @@ class Subject {
             if check {monday.append(lesson)}
         case 1:lesson.dayOfWeek = "tuesday"
             delegate?.didDonePressed()
-            arrayAddedTime.append(timeTextField)
-            lesson.time = timeTextField
+            arrayAddedTime.append(timeForLesson)
+            lesson.time = timeForLesson
             lesson.timeInMinutes = timeInMinutes
             lesson.userUID = userUID
             lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
@@ -122,8 +125,8 @@ class Subject {
             if check {tuesday.append(lesson)}
         case 2:lesson.dayOfWeek = "wednesday"
             delegate?.didDonePressed()
-            arrayAddedTime.append(timeTextField)
-            lesson.time = timeTextField
+            arrayAddedTime.append(timeForLesson)
+            lesson.time = timeForLesson
             lesson.timeInMinutes = timeInMinutes
             lesson.userUID = userUID
             lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
@@ -135,8 +138,8 @@ class Subject {
             if check {wednesday.append(lesson)}
         case 3:lesson.dayOfWeek = "thursday"
             delegate?.didDonePressed()
-            arrayAddedTime.append(timeTextField)
-            lesson.time = timeTextField
+            arrayAddedTime.append(timeForLesson)
+            lesson.time = timeForLesson
             lesson.timeInMinutes = timeInMinutes
             lesson.userUID = userUID
             lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
@@ -148,8 +151,8 @@ class Subject {
             if check {thursday.append(lesson)}
         case 4:lesson.dayOfWeek = "friday"
             delegate?.didDonePressed()
-            arrayAddedTime.append(timeTextField)
-            lesson.time = timeTextField
+            arrayAddedTime.append(timeForLesson)
+            lesson.time = timeForLesson
             lesson.timeInMinutes = timeInMinutes
             lesson.userUID = userUID
             lesson.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
@@ -162,7 +165,7 @@ class Subject {
         default:
             delegate?.didDonePressed()
             arrayAddedSubjects.append(subjectTextField)
-            arrayAddedTime.append(timeTextField)
+            arrayAddedTime.append(timeForLesson)
         }
         }else{
             delegate?.nextDidNotTapped() //made alert

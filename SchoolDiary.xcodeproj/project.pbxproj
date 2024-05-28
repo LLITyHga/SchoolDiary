@@ -60,6 +60,7 @@
 		CE9E1B422A37365700D90104 /* SubjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E1B412A37365700D90104 /* SubjectVC.swift */; };
 		CEAAD3A32BE0B9D600782259 /* User2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAD3A22BE0B9D600782259 /* User2.swift */; };
 		CEC023292BF78E920043876B /* EditorLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC023282BF78E920043876B /* EditorLessons.swift */; };
+		CEC78B7D2C0052F600C17031 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC78B7C2C0052F600C17031 /* Main.swift */; };
 		CEDDC79C2BA49231003612EE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = CEDDC79B2BA49231003612EE /* SDWebImage */; };
 		CEDDC79F2BA4927B003612EE /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = CEDDC79E2BA4927B003612EE /* FSCalendar */; };
 		CEDDC7A22BA49434003612EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CEDDC7A12BA49434003612EE /* FirebaseAuth */; };
@@ -125,6 +126,7 @@
 		CE9E1B412A37365700D90104 /* SubjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectVC.swift; sourceTree = "<group>"; };
 		CEAAD3A22BE0B9D600782259 /* User2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User2.swift; sourceTree = "<group>"; };
 		CEC023282BF78E920043876B /* EditorLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLessons.swift; sourceTree = "<group>"; };
+		CEC78B7C2C0052F600C17031 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		CEE6D62F2BD7908D0068EA18 /* GlobalVarData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVarData.swift; sourceTree = "<group>"; };
 		CEEF7DD42A3B1462005D2435 /* MainLessonCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLessonCVCell.swift; sourceTree = "<group>"; };
 		CEEF7DD52A3B1462005D2435 /* MainLessonCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainLessonCVCell.xib; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				CE6F6C552BF60FE20035ACAF /* Subject.swift */,
 				CEC023282BF78E920043876B /* EditorLessons.swift */,
+				CEC78B7C2C0052F600C17031 /* Main.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				CEAAD3A32BE0B9D600782259 /* User2.swift in Sources */,
 				CE7DAB872A42096E009A9B2D /* Homework2.swift in Sources */,
 				CE9E1B072A36E13600D90104 /* FirstViewController.swift in Sources */,
+				CEC78B7D2C0052F600C17031 /* Main.swift in Sources */,
 				CE63C7BE2A49B454007C06B0 /* LoginVC.swift in Sources */,
 				CE6F6C562BF60FE20035ACAF /* Subject.swift in Sources */,
 				CE6F6C532BF60BC70035ACAF /* Week.swift in Sources */,

@@ -55,7 +55,11 @@ class EditLessonsVC: UIViewController, UICollectionViewDelegate {
     @IBAction func nextBTN(_ sender: UIButton) {
         plusButton.isEnabled = true
         addField.isHidden = true
-        editorLessons.nextTapped(subjectTextField: subjectTextField.text ?? "", timeTextField: timeTextField.text ?? "")
+        donePressed()
+     //   print(timeTextField.text)
+        editorLessons.timeForLesson = timeTextField.text ?? ""
+       // if editorLessons.timeForLesson == "" {donePressed()}
+        editorLessons.nextTapped(subjectTextField: subjectTextField.text ?? "")
         
         
         subjectTextField.text = ""
@@ -86,8 +90,25 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
     cell.btnTapEdit = {
         () in
         self.addField.isHidden = false
-        self.editorLessons.isEditingLesson = self.editorLessons.monday[indexPath.row]
+        self.editorLessons.isEditingLesson = self.editorLessons.monday[indexPath.row]//?????
         self.editorLessons.monday.remove(at: indexPath.row)
+    }
+    cell.btnTapDelete = { [self]
+        () in
+        do{
+            let realm = try! Realm()
+            try realm.write {
+                if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", cell.nameOfSubject.text!, editorLessons.monday[indexPath.row].timeInMinutes).first {
+                    realm.delete(lessonToDelete)
+                }
+                editorLessons.monday.remove(at: indexPath.row)
+                // send information to mainVC about changes in database
+            }
+            NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)
+            collectionView.reloadData()
+        }catch{
+            print("can`t delete from realm")
+        }
     }
     
     return cell

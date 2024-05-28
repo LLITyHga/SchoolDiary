@@ -42,10 +42,12 @@ class EditorLessons {
     var friday = [Lesson3]()
     var isEditingLesson = Lesson3()
     var lesson = Lesson3()
+    var timeForLesson = ""
     
     
-    func nextTapped(subjectTextField: String, timeTextField: String) {
+    func nextTapped(subjectTextField: String) {
         if subjectTextField != ""  {
+            let timeTextField = timeForLesson
             lesson.title = subjectTextField
             lesson.time = timeTextField
             guard let userUID = Auth.auth().currentUser?.uid else {
@@ -53,7 +55,7 @@ class EditorLessons {
             }
         switch count {
         case 0:lesson.dayOfWeek = "monday"
-            delegate?.didDonePressed()   
+            delegate?.didDonePressed()   // текстфіелд зроюить окреме проперті бо параметр приходить порожній і доне прессед його не змінює
             arrayAddedTime.append(timeTextField)
             lesson.time = timeTextField
             lesson.timeInMinutes = timeInMinutes
@@ -204,15 +206,22 @@ class EditorLessons {
     }
 
     func selectedItem(row: Int) {
-        switch count {
-        case 0: monday[row].selected = !monday[row].selected
-        case 1: tuesday[row].selected = !tuesday[row].selected
-        case 2: wednesday[row].selected = !wednesday[row].selected
-        case 3: thursday[row].selected = !thursday[row].selected
-        case 4: friday[row].selected = !friday[row].selected
-        default:
-            return
+        do{
+            try realm.write {
+                switch count {
+                case 0: monday[row].selected = !monday[row].selected
+                case 1: tuesday[row].selected = !tuesday[row].selected
+                case 2: wednesday[row].selected = !wednesday[row].selected
+                case 3: thursday[row].selected = !thursday[row].selected
+                case 4: friday[row].selected = !friday[row].selected
+                default:
+                    return
+                }
+            }
+        }catch{
+            print("catch in selectedItem")
         }
+
     }
 
     func setNumberOfItemsInSection() -> Int {
