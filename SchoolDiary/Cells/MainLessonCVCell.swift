@@ -89,19 +89,19 @@ class MainLessonCVCell: UICollectionViewCell, UITextFieldDelegate, AVAudioRecord
         guard let userUID = Auth.auth().currentUser?.uid else {
             return
         }
-        let hw = realm.objects(Homework2.self).filter("userUID == %@", userUID)
-        for i in hw {
-            if i.key == "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)" {
-                print(i)
-                do {
-                    try realm.write{
-                        realm.delete(i)
-                    }
-                } catch {
-        print("can`t delete homework")
-                }
-            }
-        }
+//        let hw = realm.objects(Homework2.self).filter("userUID == %@", userUID)
+//        for i in hw {
+//            if i.key == "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)" {
+//                print(i)
+//                do {
+//                    try realm.write{
+//                        realm.delete(i)
+//                    }
+//                } catch {
+//        print("can`t delete homework")
+//                }
+//            }
+//        }
         if recordButton.currentImage == UIImage(named: "microphone-2"){
             setupRecord(filename: "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)"+".m4a")
             recordButton.setImage(UIImage(named: "record-circle"), for: .normal)
@@ -111,6 +111,7 @@ class MainLessonCVCell: UICollectionViewCell, UITextFieldDelegate, AVAudioRecord
             deleteAudioButton.isHidden = false
             audioRecorder.stop()
             btnTapRecord?()
+            reloadData?()
             speechToText()
             recordButton.setImage(UIImage(named: "microphone-2"), for: .normal)
             playButton.isEnabled = false
@@ -277,7 +278,7 @@ print("can`t delete audiofile")
         guard let userUID = Auth.auth().currentUser?.uid else {
             return
         }
-        if let audiofilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("\(main.chooseDayArray[main.count].day.ddMMyyyy)\(String(describing: lessonsName.text))\(userUID).m4a"){
+        if let audiofilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("\(currentDay.day.ddMMyyyy)\(lessonsName.text ?? "")\(userUID).m4a"){
             if FileManager.default.fileExists(atPath: audiofilePath.path) {
                 let request = SFSpeechURLRecognitionRequest(url: audiofilePath)
                 
@@ -320,6 +321,7 @@ print("can`t delete audiofile")
         }else{
             print("Не вдалося створити шлях до файлу.")
         }
+        reloadData?()
     }
     
     // MARK: - Record settings
