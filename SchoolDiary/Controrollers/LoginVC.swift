@@ -32,20 +32,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     var db = Firestore.firestore()
     var lessons = [Lesson]()
     
-    override func viewDidAppear(_ animated: Bool) {
-//                        guard let userUID = Auth.auth().currentUser?.uid else {
-//                            return
-//                        }
-//                let user = realm.objects(User.self)
-//                print(user)
-//                print(userUID)
-//                if user.first?.name == userUID {
-//                    let vc = self.storyboard!.instantiateViewController(withIdentifier: "MainVC") as! MainVC
-//                    vc.modalPresentationStyle = .fullScreen
-//                    self.present(vc, animated: true, completion: nil)
-//                }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         nextButton.frame = CGRect(x: (self.view?.frame.size.width)! / 2.7 , y: (self.view?.frame.size.height)! / 1.27 , width: view.fs_width/3.75, height: view.fs_width/3.75)

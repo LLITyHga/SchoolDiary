@@ -37,32 +37,32 @@ class MainVC: UIViewController, FSCalendarDelegate, UITextFieldDelegate, AVAudio
     var cellLesson = Lesson6()
     var dayHomework = [Homework2]()
     
-    var audioRecorder: AVAudioRecorder!
-    var audioPlayer: AVAudioPlayer!
-    var chooseDayArray = [ChooseDay2]() /*use for pick cells in dateCV*/
-    var weekHomework = [Homework2]() // there I download from database homeworks of current week
-    var chooseDate = Date()
-    var x = Date().daysOfWeek(using: .iso8601) //array week Date`s for objects in chooseDayArray
-    let currentDay = ["\(Date().dd)", "\(Date().weekDay)"] //make current day in dateCV orange color
-    var count = 0  //take knowlage what day of week show to user
-    var db = Firestore.firestore()
-    
-    let realm = try! Realm()
-    var allLessons: Results<Lesson6>?
-    var allLessons2 = [Lesson6]()
-    var templateLessons: Results<Lesson3>?
-    var allHomeworks: Results<Homework2>?
-    var allHomeworks2 = [Homework2]()
-    var dateLesslons = [Lesson6]()
-    var templateDay: Results<Lesson3>?
-    var templateDay2 = [Lesson3]()
-    var monday = [Lesson6]()
-    var tuesday = [Lesson6]()
-    var wednesday = [Lesson6]()
-    var thursday = [Lesson6]()
-    var friday = [Lesson6]()
-    var editArrayOfLessons = [Lesson6]()
-    var urls = [URL]()
+//    var audioRecorder: AVAudioRecorder!
+//    var audioPlayer: AVAudioPlayer!
+//    var chooseDayArray = [ChooseDay2]() /*use for pick cells in dateCV*/
+//    var weekHomework = [Homework2]() // there I download from database homeworks of current week
+//    var chooseDate = Date()
+//    var x = Date().daysOfWeek(using: .iso8601) //array week Date`s for objects in chooseDayArray
+//    let currentDay = ["\(Date().dd)", "\(Date().weekDay)"] //make current day in dateCV orange color
+//    var count = 0  //take knowlage what day of week show to user
+//    var db = Firestore.firestore()
+//    
+//    let realm = try! Realm()
+//    var allLessons: Results<Lesson6>?
+//    var allLessons2 = [Lesson6]()
+//    var templateLessons: Results<Lesson3>?
+//    var allHomeworks: Results<Homework2>?
+//    var allHomeworks2 = [Homework2]()
+//    var dateLesslons = [Lesson6]()
+//    var templateDay: Results<Lesson3>?
+//    var templateDay2 = [Lesson3]()
+//    var monday = [Lesson6]()
+//    var tuesday = [Lesson6]()
+//    var wednesday = [Lesson6]()
+//    var thursday = [Lesson6]()
+//    var friday = [Lesson6]()
+//    var editArrayOfLessons = [Lesson6]()
+//    var urls = [URL]()
     
     
     override func viewDidLoad() {
@@ -71,11 +71,8 @@ class MainVC: UIViewController, FSCalendarDelegate, UITextFieldDelegate, AVAudio
         NotificationCenter.default.addObserver(main, selector: #selector(main.reloadAll), name: .realmDataDidChange, object: nil)
         NotificationCenter.default.addObserver(main, selector: #selector(main.setNotification), name: .timeLocalNotificationDidChange, object: nil)
         //        NotificationCenter.default.addObserver(self, selector: #selector(syncFirebase), name: .firebaseDownloaded, object: nil)
-        let currentUser = realm.objects(User2.self).first
-        GlobalVarData.shared.notificationHour = currentUser?.notificationHour ?? 20
-        GlobalVarData.shared.notificationMinutes = currentUser?.notificationMinutes ?? 0
         main.loadUrl()
-        main.count = Int(chooseDate.numberDayInWeek) ?? 1
+        main.count = Int(main.chooseDate.numberDayInWeek) ?? 1
         main.count -= 1
         mainLessonsCV.register(MainLessonCVCell.nib(), forCellWithReuseIdentifier: "MainLessonCVCell")
         mainLessonsCV.delegate = self
@@ -93,7 +90,7 @@ class MainVC: UIViewController, FSCalendarDelegate, UITextFieldDelegate, AVAudio
             print("Notification in \(GlobalVarData.shared.notificationDays)")
         }
         main.setWeekHomeworks()
-        mainLabel.text = "\(main.chooseDayArray[count].day.mont)".capitalized
+        mainLabel.text = "\(main.chooseDayArray[main.count].day.mont)".capitalized
         //        reloadAll()
         DispatchQueue.global(qos: .background).async { [self] in
             main.syncWithFirebase()

@@ -31,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let realm = try! Realm()
+        let currentUser = realm.objects(User2.self).first
+        GlobalVarData.shared.notificationHour = currentUser?.notificationHour ?? 20
+        GlobalVarData.shared.notificationMinutes = currentUser?.notificationMinutes ?? 0
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewController: UIViewController
 let user = realm.objects(User2.self)

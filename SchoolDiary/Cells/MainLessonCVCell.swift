@@ -89,6 +89,19 @@ class MainLessonCVCell: UICollectionViewCell, UITextFieldDelegate, AVAudioRecord
         guard let userUID = Auth.auth().currentUser?.uid else {
             return
         }
+        let hw = realm.objects(Homework2.self).filter("userUID == %@", userUID)
+        for i in hw {
+            if i.key == "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)" {
+                print(i)
+                do {
+                    try realm.write{
+                        realm.delete(i)
+                    }
+                } catch {
+        print("can`t delete homework")
+                }
+            }
+        }
         if recordButton.currentImage == UIImage(named: "microphone-2"){
             setupRecord(filename: "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)"+".m4a")
             recordButton.setImage(UIImage(named: "record-circle"), for: .normal)
@@ -98,6 +111,7 @@ class MainLessonCVCell: UICollectionViewCell, UITextFieldDelegate, AVAudioRecord
             deleteAudioButton.isHidden = false
             audioRecorder.stop()
             btnTapRecord?()
+            speechToText()
             recordButton.setImage(UIImage(named: "microphone-2"), for: .normal)
             playButton.isEnabled = false
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 , execute: { [self] in
@@ -154,8 +168,13 @@ print("can`t delete audiofile")
         let hw = realm.objects(Homework2.self).filter("userUID == %@", userUID)
         for i in hw {
             if i.key == "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)" {
-                try? realm.write{
-                    realm.delete(i)
+                print(i)
+                do {
+                    try realm.write{
+                        realm.delete(i)
+                    }       
+                } catch {
+        print("can`t delete homework")
                 }
             }
         }
@@ -224,49 +243,7 @@ print("can`t delete audiofile")
             }
             let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let audiofileName = path.appendingPathComponent(main.chooseDayArray[main.count].day.ddMMyyyy+lessonsName.text!+"\(userUID)"+".m4a")
-            if let audiofilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("\(main.chooseDayArray[main.count].day.ddMMyyyy)\(lessonsName.text!)\(userUID).m4a"){
-                if FileManager.default.fileExists(atPath: audiofilePath.path) {
-                    let request = SFSpeechURLRecognitionRequest(url: audiofilePath)
-                    
-                    let recognizer = SFSpeechRecognizer()
-                    
-                    recognizer?.recognitionTask(with: request) { [self] result, error in
-                        guard let result = result else {
-                            if let error = error {
-                                print("Помилка під час розпізнавання: \(error)")
-                            }
-                            return
-                        }
-                        
-                        let text = result.bestTranscription.formattedString
-                        print("Розпізнаний текст: \(text)")
-                        let homework = Homework2()
-                        homework.day = currentDay.day
-                        homework.text = text
-                        homework.lesson = lessonsName.text ?? ""
-                        homeworkLabel.text = text
-                        homework.userUID = userUID
-                        homework.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
-                        homework.key = "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)"
-                        do{
-                            try realm.write{
-                                realm.add(homework, update: .modified)
-                            }
-                        }catch{
-                            print("Error saving homework")
-                        }
-                        homeworkLabel.text = text
-                        fullHomeworkLabel.text = text
-                        editHomeworkLabel.text = ""
-                        editHomeworkLabel.isHidden = true
-                        showFullHomeworkButton.isHidden = false
-                    }
-                } else {
-                    print("Файл не знайдено.")
-                }
-            }else{
-                print("Не вдалося створити шлях до файлу.")
-            }
+            
             
             playButton.isHidden = true
             deleteAudioButton.isHidden = true
@@ -296,6 +273,54 @@ print("can`t delete audiofile")
     
     }
     
+    func speechToText() {
+        guard let userUID = Auth.auth().currentUser?.uid else {
+            return
+        }
+        if let audiofilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("\(main.chooseDayArray[main.count].day.ddMMyyyy)\(String(describing: lessonsName.text))\(userUID).m4a"){
+            if FileManager.default.fileExists(atPath: audiofilePath.path) {
+                let request = SFSpeechURLRecognitionRequest(url: audiofilePath)
+                
+                let recognizer = SFSpeechRecognizer()
+                
+                recognizer?.recognitionTask(with: request) { [self] result, error in
+                    guard let result = result else {
+                        if let error = error {
+                            print("Помилка під час розпізнавання: \(error)")
+                        }
+                        return
+                    }
+                    
+                    let text = result.bestTranscription.formattedString
+                    print("Розпізнаний текст: \(text)")
+                    let homework = Homework2()
+                    homework.day = currentDay.day
+                    homework.text = text
+                    homework.lesson = lessonsName.text ?? ""
+                    homeworkLabel.text = text
+                    homework.userUID = userUID
+                    homework.dateLastChange = Int(DispatchTime.now().uptimeNanoseconds)
+                    homework.key = "\(currentDay.day.ddMMyyyy)"+"\(lessonsName.text ?? "")"+"\(userUID)"
+                        do{
+                            try realm.write{
+                                realm.add(homework, update: .modified)
+                            }
+                        }catch{
+                            print("Error saving homework")
+                        }
+                    homeworkLabel.text = text
+                    fullHomeworkLabel.text = text
+                    editHomeworkLabel.text = ""
+                    editHomeworkLabel.isHidden = true
+                    showFullHomeworkButton.isHidden = false
+                }
+            } else {
+                print("Файл не знайдено.")
+            }
+        }else{
+            print("Не вдалося створити шлях до файлу.")
+        }
+    }
     
     // MARK: - Record settings
     

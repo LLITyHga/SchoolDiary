@@ -98,10 +98,25 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
         do{
             let realm = try! Realm()
             try realm.write {
-                if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", cell.nameOfSubject.text!, editorLessons.monday[indexPath.row].timeInMinutes).first {
+                var arrDell: [Lesson3]
+                switch editorLessons.count {
+                case 0: arrDell = editorLessons.monday
+                    editorLessons.monday.remove(at: indexPath.row)
+                case 1: arrDell = editorLessons.tuesday
+                    editorLessons.tuesday.remove(at: indexPath.row)
+                case 2: arrDell = editorLessons.wednesday
+                    editorLessons.wednesday.remove(at: indexPath.row)
+                case 3: arrDell = editorLessons.thursday
+                    editorLessons.thursday.remove(at: indexPath.row)
+                case 4: arrDell = editorLessons.friday
+                    editorLessons.friday.remove(at: indexPath.row)
+                default:
+                    return
+                }
+                if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", cell.nameOfSubject.text!, arrDell[indexPath.row].timeInMinutes).first {
                     realm.delete(lessonToDelete)
                 }
-                editorLessons.monday.remove(at: indexPath.row)
+                
                 // send information to mainVC about changes in database
             }
             NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)

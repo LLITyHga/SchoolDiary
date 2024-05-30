@@ -32,6 +32,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
             let realm = try! Realm()
+        let currentUser = realm.objects(User2.self).first
+        GlobalVarData.shared.notificationHour = currentUser?.notificationHour ?? 20
+        GlobalVarData.shared.notificationMinutes = currentUser?.notificationMinutes ?? 0
+
         var initialViewController: UIViewController
 
             if realm.objects(User2.self).isEmpty {
