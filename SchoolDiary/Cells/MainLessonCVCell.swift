@@ -179,6 +179,7 @@ print("can`t delete audiofile")
                 }
             }
         }
+        reloadData?()
         playButton.isHidden = true
         deleteAudioButton.isHidden = true
         btnTapRecord?()
@@ -245,7 +246,6 @@ print("can`t delete audiofile")
             let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let audiofileName = path.appendingPathComponent(main.chooseDayArray[main.count].day.ddMMyyyy+lessonsName.text!+"\(userUID)"+".m4a")
             
-            
             playButton.isHidden = true
             deleteAudioButton.isHidden = true
             for ii in main.urls {
@@ -271,7 +271,6 @@ print("can`t delete audiofile")
             lessonsName.textColor = .black
             homeworkLabel.textColor = .black
         }
-    
     }
     
     func speechToText() {

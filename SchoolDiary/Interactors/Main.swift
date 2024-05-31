@@ -626,7 +626,6 @@ class Main {
     }
     
     func dateLessons() {
-      //  print("FLAG #1")
         dateLesslons.removeAll()
             for obj1 in templateDay2 { //check templates in a day and create new dateLesson
                 var found = false

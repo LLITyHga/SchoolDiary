@@ -638,6 +638,9 @@
                                 </view>
                                 <blurEffect style="regular"/>
                             </visualEffectView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="4fE-PC-NyI">
+                                <rect key="frame" x="197" y="445" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8oj-zt-fmh"/>
                         <color key="backgroundColor" red="0.99999994039999995" green="0.99999994039999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -661,12 +664,14 @@
                             <constraint firstItem="Mkz-Bg-r7M" firstAttribute="height" secondItem="PPv-vO-KVU" secondAttribute="height" multiplier="0.121652" id="Nxe-u5-cyd"/>
                             <constraint firstItem="CfP-Fv-Kls" firstAttribute="height" secondItem="PPv-vO-KVU" secondAttribute="height" multiplier="0.0379464" id="Pxk-fT-3JN"/>
                             <constraint firstItem="BmR-a1-9Zv" firstAttribute="height" secondItem="PPv-vO-KVU" secondAttribute="height" multiplier="0.0379464" id="QnJ-GU-REs"/>
+                            <constraint firstItem="4fE-PC-NyI" firstAttribute="centerY" secondItem="8oj-zt-fmh" secondAttribute="centerY" id="T3C-nL-Kac"/>
                             <constraint firstItem="e2O-ht-NyB" firstAttribute="top" secondItem="8oj-zt-fmh" secondAttribute="top" constant="210" id="T74-ob-JTv"/>
                             <constraint firstItem="Gf6-M1-I7n" firstAttribute="height" secondItem="PPv-vO-KVU" secondAttribute="height" multiplier="0.0279018" id="T7S-pz-Gpd"/>
                             <constraint firstItem="7q4-e6-j97" firstAttribute="top" secondItem="Gf6-M1-I7n" secondAttribute="bottom" constant="8" id="WcA-yr-nEI"/>
                             <constraint firstItem="OyN-WG-2C2" firstAttribute="centerX" secondItem="8oj-zt-fmh" secondAttribute="centerX" multiplier="1.45" id="XMx-Cb-yys"/>
                             <constraint firstItem="Mkz-Bg-r7M" firstAttribute="trailing" secondItem="8oj-zt-fmh" secondAttribute="trailing" id="Yvq-gS-cvG"/>
                             <constraint firstItem="Gf6-M1-I7n" firstAttribute="centerX" secondItem="8oj-zt-fmh" secondAttribute="centerX" id="a30-Ii-5tQ"/>
+                            <constraint firstItem="4fE-PC-NyI" firstAttribute="centerX" secondItem="8oj-zt-fmh" secondAttribute="centerX" id="beK-IQ-rad"/>
                             <constraint firstItem="4ci-wj-cHm" firstAttribute="height" secondItem="PPv-vO-KVU" secondAttribute="height" multiplier="0.0334821" id="dgM-1A-HS8"/>
                             <constraint firstItem="OyN-WG-2C2" firstAttribute="height" secondItem="PPv-vO-KVU" secondAttribute="height" multiplier="0.0424107" id="fZs-LD-G4d"/>
                             <constraint firstItem="e2O-ht-NyB" firstAttribute="centerX" secondItem="8oj-zt-fmh" secondAttribute="centerX" id="gLi-cl-Cdb"/>
@@ -674,16 +679,19 @@
                             <constraint firstItem="yaa-uh-oam" firstAttribute="height" secondItem="8oj-zt-fmh" secondAttribute="height" multiplier="0.326406" id="ojw-yz-O3G"/>
                             <constraint firstItem="CfP-Fv-Kls" firstAttribute="top" secondItem="7q4-e6-j97" secondAttribute="bottom" constant="16" id="pBx-G1-rSI"/>
                             <constraint firstItem="BmR-a1-9Zv" firstAttribute="top" secondItem="8oj-zt-fmh" secondAttribute="top" constant="20" id="pYH-g7-HUO"/>
+                            <constraint firstItem="4fE-PC-NyI" firstAttribute="width" secondItem="PPv-vO-KVU" secondAttribute="width" multiplier="0.0483092" id="qT3-wq-dCL"/>
                             <constraint firstItem="Gf6-M1-I7n" firstAttribute="top" secondItem="x6W-3a-wtY" secondAttribute="bottom" constant="8" id="tIS-kq-NDQ"/>
                             <constraint firstItem="4ci-wj-cHm" firstAttribute="width" secondItem="PPv-vO-KVU" secondAttribute="width" multiplier="0.0724638" id="tJJ-ps-0ZC"/>
                             <constraint firstItem="Gf6-M1-I7n" firstAttribute="width" secondItem="PPv-vO-KVU" secondAttribute="width" multiplier="0.541063" id="tTd-bS-mDI"/>
                             <constraint firstItem="e2O-ht-NyB" firstAttribute="height" secondItem="PPv-vO-KVU" secondAttribute="height" multiplier="0.0379464" id="tn6-Rn-561"/>
                             <constraint firstItem="CfP-Fv-Kls" firstAttribute="centerX" secondItem="8oj-zt-fmh" secondAttribute="centerX" id="tpf-Bj-XXZ"/>
                             <constraint firstItem="e2O-ht-NyB" firstAttribute="width" secondItem="PPv-vO-KVU" secondAttribute="width" multiplier="0.541063" id="vdy-aX-k3d"/>
+                            <constraint firstItem="4fE-PC-NyI" firstAttribute="height" secondItem="PPv-vO-KVU" secondAttribute="height" multiplier="0.0223214" id="wGa-yV-iVG"/>
                             <constraint firstItem="x6W-3a-wtY" firstAttribute="top" secondItem="e2O-ht-NyB" secondAttribute="bottom" constant="8" id="zfC-9f-e4z"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityOUTLET" destination="4fE-PC-NyI" id="9GT-Rz-Lnx"/>
                         <outlet property="emailTextField" destination="e2O-ht-NyB" id="udq-Zq-5P7"/>
                         <outlet property="googleSignInButton" destination="CfP-Fv-Kls" id="oPs-n3-5Fk"/>
                         <outlet property="nextButton" destination="zV8-Zb-Jsm" id="BeZ-6F-m8F"/>
@@ -1496,19 +1504,19 @@
         <image name="shadow" width="291" height="83"/>
         <image name="web 1" width="91" height="108"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBrownColor">
-            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

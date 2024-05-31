@@ -158,12 +158,12 @@ class LessonCVCell: UICollectionViewCell {
             linearView2.isHidden = false
             deleteBTNOutlet.isHidden = false
             timeLabel.isHidden = true
-            if editor != nil {editButton.isHidden = false}
+     //       if editor != nil {editButton.isHidden = false}
         } else {
             linearView2.isHidden = true
             deleteBTNOutlet.isHidden = true
             timeLabel.isHidden = false
-            if editor != nil {editButton.isHidden = true}
+       //     if editor != nil {editButton.isHidden = true}
         }
     }
 

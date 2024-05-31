@@ -20,6 +20,7 @@ import SafariServices
 class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var regShowPasswordButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var activityOUTLET: UIActivityIndicatorView!
     @IBOutlet weak var regEmailTextfield: UITextField!
     @IBOutlet weak var regPasswordTextField: UITextField!
     @IBOutlet weak var regWindow: UIVisualEffectView!
@@ -50,6 +51,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         }
     }
     @IBAction func regNextBTN(_ sender: UIButton) {
+        activityOUTLET.isHidden = false
         if let email = regEmailTextfield.text, let password = regPasswordTextField.text{
         basicRegIn(email: email, password: password)
         }
@@ -109,9 +111,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBAction func facebookLogin(_ sender: UIButton) {
     }
     @IBAction func googleLogin(_ sender: UIButton) {
+        activityOUTLET.isHidden = false
         signIn()
     }
     @IBAction func nexyButton(_ sender: UIButton) {
+        activityOUTLET.isHidden = false
         if let email = emailTextField.text, let password = passwordTextField.text {
             basicSignIn(email: email, password: password)
         }
@@ -158,7 +162,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
                     }else{
-                        print("Flag 1")
                         db.collection("lessons"+userUID).addSnapshotListener { [self] querySnapshot, error in
                         self.lessons = []
                         if let e = error {
@@ -167,7 +170,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                            vc.modalPresentationStyle = .fullScreen
                                            self.present(vc, animated: true, completion: nil)
                         }else {
-                            print("Flag 2")
                             if let snapshotDocumet = querySnapshot?.documents {
                                 for doc in snapshotDocumet {
                                     let lesson = Lesson(title: doc["title"] as? String ?? "",
@@ -179,11 +181,9 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                                         userUID: doc["userUID"] as? String ?? "",
                                                         dateLastChange: doc["dateLastChange"] as? Int ?? 0)
                                     lessons.append(lesson)
-                                    print("Flag 3")
                                     }
                             }
                             if allLessons?.count ?? 0 <= 0 && allLessons != nil{
-                                print("Flag 4")
                                 for s in lessons {
                                     let lesson2 = Lesson3()
                                                 lesson2.title = s.title

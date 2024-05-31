@@ -55,7 +55,7 @@ class EditorLessons {
             }
         switch count {
         case 0:lesson.dayOfWeek = "monday"
-            delegate?.didDonePressed()   // текстфіелд зроюить окреме проперті бо параметр приходить порожній і доне прессед його не змінює
+            delegate?.didDonePressed()   
             arrayAddedTime.append(timeTextField)
             lesson.time = timeTextField
             lesson.timeInMinutes = timeInMinutes

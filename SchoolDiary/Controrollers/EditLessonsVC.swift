@@ -14,6 +14,7 @@ import RealmSwift
 import GoogleSignIn
 import GoogleSignInSwift
 import SafariServices
+import FirebaseDatabaseInternal
 
 class EditLessonsVC: UIViewController, UICollectionViewDelegate {
     
@@ -95,12 +96,68 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
     }
     cell.btnTapDelete = { [self]
         () in
+          
         do{
             let realm = try! Realm()
             try realm.write {
                 var arrDell: [Lesson3]
                 switch editorLessons.count {
                 case 0: arrDell = editorLessons.monday
+                    if let deleteFromFirebase = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", cell.nameOfSubject.text!, arrDell[indexPath.row].timeInMinutes).first {
+                guard let userUID = Auth.auth().currentUser?.uid else {
+                    return
+                }
+    //            let ref = Database.database().reference(withPath: "lessons"+userUID)
+    //            ref.queryOrdered(byChild: "primaryKey").queryEqual(toValue: "\(deleteFromFirebase.key)")
+    //            .observeSingleEvent(of: .value, with: { snapshot in
+    //                for child in snapshot.children {
+    //                    let snap = child as! DataSnapshot
+    //                    let key = snap.key
+    //                    ref.child(key).removeValue()
+    //                }
+    //            })
+                        let ref = Database.database().reference(withPath: "lessons"+userUID)
+                        ref.observe(.childAdded, with: { (snapshot) -> Void in
+//                            print("FLAG \(snapshot.value(forKey: "primaryKey"))")
+//                            print("FLAG \(ref.child(snapshot.key))")
+                            if let value = snapshot.value as? [String: AnyObject],
+                               let primaryKey = value["primaryKey"] as? String,
+                               primaryKey == "\(deleteFromFirebase.key)" {
+                                ref.child(snapshot.key).removeValue()
+                            }
+                        })
+//                        var db = Firestore.firestore()
+//                        db.collection("lessons"+userUID).addSnapshotListener { querySnapshot, error in
+//                            if let e = error {
+//                                print(e)
+//                            }else {
+//                                if let snapshotDocumet = querySnapshot?.documents {
+//                                    for doc in snapshotDocumet {
+//                                        let lesson = Lesson(title: doc["title"] as? String ?? "",
+//                                                            selected: doc["selected"] as? Bool ?? false,
+//                                                            dayOfWeek: doc["dayOfWeek"] as? String ?? "",
+//                                                            time: doc["time"] as? String ?? "",
+//                                                            homework: doc["homework"] as? String ?? "",
+//                                                            timeInMinutes: doc["timeInMinutes"] as? Int ?? 0,
+//                                                            userUID: doc["userUID"] as? String ?? "",
+//                                                            dateLastChange: doc["dateLastChange"] as? Int ?? 0)
+//                                        let key = "\(lesson.title)+\(lesson.timeInMinutes)+\(lesson.userUID)"
+//                                        if deleteFromFirebase.key == key {
+//                                            let ref = Database.database().reference(withPath: "lessons\(userUID)/\(doc.documentID)")
+//                                            ref.removeValue { error, _ in
+//                                                if let error = error {
+//                                                    print("Error: \(error)")
+//                                                } else {
+//                                                    print("Item successfully removed")
+//                                                }
+//                                            }
+//
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+                    }
                     editorLessons.monday.remove(at: indexPath.row)
                 case 1: arrDell = editorLessons.tuesday
                     editorLessons.tuesday.remove(at: indexPath.row)
@@ -113,13 +170,16 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
                 default:
                     return
                 }
+         
+                
                 if let lessonToDelete = realm.objects(Lesson3.self).filter("title == %@ AND timeInMinutes == %@", cell.nameOfSubject.text!, arrDell[indexPath.row].timeInMinutes).first {
                     realm.delete(lessonToDelete)
+                   
+                    editorLessons.loadLessons()
                 }
                 
-                // send information to mainVC about changes in database
             }
-            NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)
+            //   NotificationCenter.default.post(name: Notification.Name.realmDataDidChange, object: nil)
             collectionView.reloadData()
         }catch{
             print("can`t delete from realm")
